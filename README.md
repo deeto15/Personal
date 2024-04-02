@@ -2,7 +2,6 @@ This project kind of became a rabbit hole. Navigate into the my-basic-website fo
 
 The following packages are required: 
 express==4.18.3
-https==1.0.0
 
 Simply run "npm install express" or "npm install express@4.18.3" for the specific version
 
