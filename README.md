@@ -1,4 +1,4 @@
-This project kind of became a rabbit hole. Navigate into the my-basic-website folder, then the backend folder. All code should be executed from there
+This project kind of became a rabbit hole with a lot of folders. Navigate into the my-basic-website folder, then the backend folder. All code should be executed from there
 
 The following packages are required: 
 express==4.18.3
