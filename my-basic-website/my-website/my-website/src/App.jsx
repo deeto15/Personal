@@ -12,7 +12,7 @@ function App() {
     getCatPicture();
     updateCountdown();
     const countdownInterval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(countdownInterval); 
+    return () => clearInterval(countdownInterval);
   }, []);
 
   function getCatPicture() {
@@ -49,7 +49,7 @@ function App() {
       <main>
         <h2>Assignment Countdown</h2>
         <p id="countdown">{countdown}</p>
-        
+
         <section>
           <h2>Website Content</h2>
           <p>This is the guts of my website. I decided to build this page because it is my project for Distributed Web Systems. In the top is a counter that is ticking down until the next assignment is due.</p>

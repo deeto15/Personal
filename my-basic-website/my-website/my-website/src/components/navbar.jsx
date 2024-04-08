@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import anime from "animejs/lib/anime.es.js";
 
 const navLinks = [
   {
@@ -18,58 +17,32 @@ const navLinks = [
 ];
 
 function Navbar() {
-  const { pathname } = useLocation();
-  const [isHeaderVisible, setHeaderVisible] = useState(true);
-  const [isFooterVisible, setFooterVisible] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
-    function handleScroll() {
-      const offset = window.scrollY;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
-      const documentHeight = document.body.scrollHeight;
-      const buffer = 100;
-    
-      if (offset < buffer || offset + windowHeight > documentHeight - buffer) {
-        setHeaderVisible(true);
-        setFooterVisible(true);
-      } else if (offset > buffer && offset + windowHeight < documentHeight - buffer) {
-        setHeaderVisible(false);
-        setFooterVisible(false);
-      }
-    }
+      const documentHeight = document.documentElement.scrollHeight;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (scrollPosition === 0) {
+        setIsHeaderVisible(true);
+      } else {
+        setIsHeaderVisible(false);
+      }
+
+      if (scrollPosition + windowHeight >= documentHeight) {
+        setIsFooterVisible(true);
+      } else {
+        setIsFooterVisible(false);
+      }
     };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const header = document.querySelector(".header-container");
-    const logo = document.getElementById("logo");
-
-    function handleMouseEnter() {
-      header.style.backgroundColor = "#555";
-    }
-
-    function handleMouseLeave() {
-      header.style.backgroundColor = "rgb(127, 166, 208)";
-    }
-
-    header.addEventListener("mouseenter", handleMouseEnter);
-    header.addEventListener("mouseleave", handleMouseLeave);
-
-    anime({
-      targets: logo,
-      translateY: [{ value: -20, duration: 500 }, { value: 0, duration: 800 }],
-      loop: true,
-    });
-
-    return () => {
-      header.removeEventListener("mouseenter", handleMouseEnter);
-      header.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, [isHeaderVisible]);
 
   return (
     <div
@@ -99,7 +72,6 @@ function Navbar() {
           ))}
         </nav>
       </header>
-      {isFooterVisible && (
         <footer id="footer">
           <form id="contactForm" action="#" method="post">
             <label htmlFor="name">Name:</label>
@@ -117,7 +89,6 @@ function Navbar() {
 
           <p>&copy; 2024 Kendall Eberly | <a href="mailto:ke05739@georgiasouthern.edu">ke05739@georgiasouthern.edu</a></p>
         </footer>
-      )}
     </div>
   );
 }

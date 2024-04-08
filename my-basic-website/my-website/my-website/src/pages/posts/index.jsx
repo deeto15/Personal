@@ -15,7 +15,7 @@ function Posts() {
         try {
             const response = await fetch(postsURL)
             const newPosts = await response.json()
-            
+
             setPosts(newPosts.slice(0, 5));
             setFilteredPosts(newPosts)
         } catch (err) {
@@ -29,7 +29,7 @@ function Posts() {
     }, [])
 
     useEffect(() => {
-        
+
         const matchingPosts = posts.filter(post => {
             return post.title.toLowerCase().includes(search.toLowerCase()) || search === ''
         })
@@ -37,19 +37,19 @@ function Posts() {
 
     }, [search])
     return (
-            <main>
-        <div className="posts" style={{ paddingTop: '100px' }}>
-           <h1>
-  Posts from the <a href='https://jsonplaceholder.typicode.com/' style={{ color: 'inherit', fontSize: 'inherit', fontWeight: 'inherit' }}>JSONPlaceholder API</a>
-</h1>
+        <main>
+            <div className="posts" style={{ paddingTop: '100px' }}>
+                <h1>
+                    Posts from the <a href='https://jsonplaceholder.typicode.com/' style={{ color: 'inherit', fontSize: 'inherit', fontWeight: 'inherit' }}>JSONPlaceholder API</a>
+                </h1>
 
-            <form style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-                <p>Search posts by title</p>
-                <input value={search} onChange={e => setSearch(e.target.value)}/>
-            </form>
-            {error != '' && <h1>{error}</h1>}
-            {filteredPosts.map((post, idx) => <Post post={post} key={idx}/>)}
-        </div>
+                <form style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <p>Search posts by title</p>
+                    <input value={search} onChange={e => setSearch(e.target.value)} />
+                </form>
+                {error != '' && <h1>{error}</h1>}
+                {filteredPosts.map((post, idx) => <Post post={post} key={idx} />)}
+            </div>
         </main>
     )
 }
