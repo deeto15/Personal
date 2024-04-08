@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import anime from "animejs/lib/anime.es.js";
 
 const navLinks = [
   {
@@ -17,31 +18,43 @@ const navLinks = [
 ];
 
 function Navbar() {
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const { pathname } = useLocation();
+  const [isHeaderVisible, setHeaderVisible] = useState(true);
+  const [isFooterVisible, setFooterVisible] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+    function handleScroll() {
+  const offset = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.body.scrollHeight;
+  const buffer = 100;
 
-      if (scrollPosition === 0) {
-        setIsHeaderVisible(true);
-      } else {
-        setIsHeaderVisible(false);
-      }
+  if (offset < buffer || offset + windowHeight > documentHeight - buffer) {
+    setHeaderVisible(true);
+    setFooterVisible(true);
+  } else {
+    setFooterVisible(false);
+  }
+}function handleScroll() {
+  const offset = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.body.scrollHeight;
+  const buffer = 100;
 
-      if (scrollPosition + windowHeight >= documentHeight) {
-        setIsFooterVisible(true);
-      } else {
-        setIsFooterVisible(false);
-      }
+  if (offset < buffer || offset + windowHeight > documentHeight - buffer) {
+    setHeaderVisible(true);
+    setFooterVisible(true);
+  } else {
+    setFooterVisible(false);
+  }
+}
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
 
 
   return (
